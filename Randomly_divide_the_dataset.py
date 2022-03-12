@@ -14,20 +14,20 @@ def Randomly_divide_the_dataset(BACTHSIZE):
                                                 train=False,
                                                 transform=testset_transform,
                                                 download=False)
-  dog_indices = []
-  dog_idx = ds.class_to_idx['truck']
+    indices = []
+    idx = ds.class_to_idx['truck']
 
   for i in range(len(ds)):
     current_class = ds[i][1]
-    if current_class == dog_idx:
-      dog_indices.append(i)
-  dog_indices = dog_indices[:int(0.6 * len(dog_indices))]
-  new_dataset = Subset(ds, dog_indices)
-  data_loader_test_dog = DataLoader(dataset=new_dataset,
+    if current_class == idx:
+      indices.append(i)
+    indices = indices[:int(0.6 * len(indices))]
+  new_dataset = Subset(ds, indices)
+  data_loader_test = DataLoader(dataset=new_dataset,
                                     batch_size=BACTHSIZE,
                                     shuffle=False,
                                     )
-  return data_loader_test_dog
+  return data_loader_test
 
 def newData(BATCHSIZE):
     return Randomly_divide_the_dataset(BACTHSIZE=BATCHSIZE)
