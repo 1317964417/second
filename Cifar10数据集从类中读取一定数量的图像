@@ -1,0 +1,29 @@
+Cifar10数据集:从类中读取一定数量的图像
+from torchvision.datasets import CIFAR10
+from torch.utils.data import Subset
+
+ds = CIFAR10('~/.torch/data/', train=True, download=True)
+dog_indices, deer_indices, other_indices = [], [], []
+dog_idx, deer_idx = ds.class_to_idx['dog'], ds.class_to_idx['deer']
+
+for i in range(len(ds)):
+  current_class = ds[i][1]
+  if current_class == dog_idx:
+    dog_indices.append(i)
+  elif current_class == deer_idx:
+    deer_indices.append(i)
+  else:
+    other_indices.append(i)
+dog_indices = dog_indices[:int(0.6 * len(dog_indices))]
+deer_indices = deer_indices[:int(0.6 * len(deer_indices))]
+new_dataset = Subset(ds, dog_indices+deer_indices+other_indices)
+
+4.0280e+00, -2.0172e+00, -2.3240e+00,  3.0373e+00,  5.9037e+00,
+         -6.0569e+00, -2.2054e+00,  9.5812e-01, -1.1367e+00, -1.3317e+00
+
+4.0280e+00, -2.0172e+00, -2.3240e+00,  3.0373e+00,  5.9037e+00,
+         -6.0569e+00, -2.2054e+00,  9.5812e-01, -1.1367e+00, -1.3317e+00
+
+_fgsm_epsilon=01
+
+https://pypi.tuna.tsinghua.edu.cn/simple
